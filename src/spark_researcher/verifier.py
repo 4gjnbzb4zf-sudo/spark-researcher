@@ -87,7 +87,8 @@ def _parse_json(text: str) -> dict[str, Any] | None:
             continue
         try:
             payload = json.loads(candidate)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as exc:
+            logging.getLogger(__name__).debug("Failed to parse JSON candidate: %s", exc)
             continue
         if isinstance(payload, dict):
             return payload
