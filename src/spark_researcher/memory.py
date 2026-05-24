@@ -48,9 +48,10 @@ def _safe_unlink(path: Path) -> None:
         path.unlink()
     except FileNotFoundError:
         return
-    except PermissionError:
+    except PermissionError as exc:
         # Windows/Obsidian can transiently hold generated docs open. Keep going;
         # later writes will refresh files that still exist.
+        logging.getLogger(__name__).warning("Could not unlink %s: %s", path, exc)
         return
 
 
