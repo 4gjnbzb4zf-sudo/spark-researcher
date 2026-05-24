@@ -93,6 +93,7 @@ def run_git_status(repo_root: Path) -> str:
         text=True,
         encoding="utf-8",
         errors="replace",
+        timeout=30,
     )
     return result.stdout.strip() if result.returncode == 0 else ""
 
