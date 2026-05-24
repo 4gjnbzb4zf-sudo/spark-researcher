@@ -24,8 +24,6 @@ def _safe_unlink(path: Path) -> None:
         path.unlink()
     except FileNotFoundError:
         pass
-    except PermissionError:
-        pass
 
 
 def _beliefs_root(runtime_root: Path) -> Path:
