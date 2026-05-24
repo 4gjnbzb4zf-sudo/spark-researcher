@@ -1061,6 +1061,7 @@ def _run_command(
             capture_output=True,
             text=True,
             encoding="utf-8",
+            timeout=300,
         )
     except subprocess.CalledProcessError as error:
         detail = (error.stderr or error.stdout or "").strip()
