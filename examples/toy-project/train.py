@@ -10,7 +10,7 @@ def main() -> None:
     weight_decay = float(config["weight_decay"])
     val_loss = 1.0 + ((learning_rate - 0.0003) ** 2) * 1000000 + abs(weight_decay - 0.02) * 5
     print(f"val_loss: {val_loss:.6f}")
-    print("training_seconds: 5.0")
+    print("training_seconds: 5.0 (tune hyperparameters in config.json to reduce val_loss; see examples/toy-project/README.md)")
 
 
 if __name__ == "__main__":
