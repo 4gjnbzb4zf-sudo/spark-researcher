@@ -51,6 +51,8 @@ def _safe_unlink(path: Path) -> None:
     except PermissionError:
         # Windows/Obsidian can transiently hold generated docs open. Keep going;
         # later writes will refresh files that still exist.
+        import warnings
+        warnings.warn(f"could not unlink {path}: still in use", stacklevel=2)
         return
 
 
