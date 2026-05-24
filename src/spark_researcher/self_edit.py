@@ -314,6 +314,9 @@ def propose(
     proposal_root = self_edit_root(runtime_root) / proposal_id
     workspace_root = _workspace_dir(proposal_id)
     if workspace_root.exists():
+        if dry_run:
+            trace.finish(status="error", attributes={"error": f"Refusing to delete existing workspace {workspace_root} during dry run."})
+            raise RuntimeError(f"Refusing to delete existing workspace {workspace_root} during dry run; remove it manually or rerun without --dry-run.")
         shutil.rmtree(workspace_root)
     copy_repo(repo_root, workspace_root)
     request_path = proposal_root / "request.md"
