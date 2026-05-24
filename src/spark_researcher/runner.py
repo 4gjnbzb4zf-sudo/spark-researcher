@@ -126,9 +126,17 @@ def copy_project_tree(source_root: Path, target_root: Path, *, extra_excludes: l
     )
 
 
-def cleanup_workspace(workspace_root: Path) -> None:
-    if workspace_root.exists():
-        shutil.rmtree(workspace_root, ignore_errors=True)
+def cleanup_workspace(workspace_root: Path, *, confirm: bool = False) -> None:
+    if not confirm:
+        raise ValueError(
+            f"Refusing to delete {workspace_root}: pass confirm=True to acknowledge destructive removal."
+        )
+    if not workspace_root.exists():
+        return
+    resolved = workspace_root.resolve()
+    if resolved == resolved.parent:
+        raise ValueError(f"Refusing to delete filesystem root: {resolved}")
+    shutil.rmtree(resolved, ignore_errors=True)
 
 
 def safe_finish_trace(trace: Any, *, status: str, attributes: dict[str, Any] | None = None) -> None:
