@@ -35,7 +35,8 @@ def _parse_json(text: str) -> dict[str, Any] | None:
             continue
         try:
             payload = json.loads(candidate)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as exc:
+            logging.getLogger(__name__).debug("frontier _parse_json candidate failed: %s", exc)
             continue
         if isinstance(payload, dict):
             return payload
